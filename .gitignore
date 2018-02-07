@@ -31,5 +31,8 @@
 *.out
 *.app
 
+# Configuration
+config.toml
+
 # VSCode Stuff
 .vscode/*

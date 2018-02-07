@@ -1,11 +1,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <avr/pgmspace.h>
 
 Adafruit_SSD1306 display(4);
 
 char mode, d1, d2;
 char buff[16] = "";
+String cond = "";
 
 void setup() {
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -48,6 +50,26 @@ void loop() {
 			d1 = Serial.read();
 			sprintf(buff, "CPU:%d%%", d1);
 			display.print(buff);
+		}
+		if(mode == 'E') { // Weather
+			display.setCursor(0, 32);
+			display.print("WEATHER");
+			display.drawFastHLine(0, 46, 128, WHITE);
+			while(Serial.available() == 0) {}
+			d1 = Serial.read(); // The coord system for bitmap drawing is bass ackwards
+			if(d1 == 'A'){ display.drawBitmap(114, 48, sunny, 13, 13, WHITE); cond = "CLEAR"; }
+			if(d1 == 'B'){ display.drawBitmap(114, 48, fewClouds, 13, 8, WHITE); cond = "OVCST"; }
+			if(d1 == 'C'){ display.drawBitmap(114, 48, clouds, 13, 5, WHITE); cond = "CLDY"; }
+			if(d1 == 'D'){ display.drawBitmap(114, 48, rain, 13, 10, WHITE); cond = "RAIN"; }
+			if(d1 == 'E'){ display.drawBitmap(114, 48, tstorm, 13, 10, WHITE); cond = "TSTRM"; }
+			if(d1 == 'F'){ display.drawBitmap(114, 48, snow, 9, 9, WHITE); cond = "SNOW"; }
+			if(d1 == 'G'){ display.drawBitmap(114, 48, fog, 14, 12, WHITE); cond = "FOG"; }
+			while(Serial.available() == 0) {}
+			d1 = Serial.read();
+			display.setCursor(0, 48);
+			sprintf(buff, "%dC:", d1);
+			display.print(buff);
+			display.print(cond);
 		}
 		if(mode == 'Z') {
 			display.display();
