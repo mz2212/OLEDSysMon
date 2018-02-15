@@ -33,6 +33,7 @@
 
 # Configuration
 config.toml
+conf.h
 
 # VSCode Stuff
 .vscode/*

@@ -15,6 +15,9 @@ void setup() {
 	display.clearDisplay();
 	display.setTextColor(WHITE);
 	display.setTextSize(2);
+	//display.drawBitmap(32, 0, wifi, 64, 50, WHITE);
+	//display.display(); // Test the wifi icon.
+	// This stuff will be handy for when I get my esp8285 in. On an uno, not quite as much.
 
 	Serial.begin(9600);
 }
