@@ -116,7 +116,7 @@ void loop() {
 						break;
 				}
 				u8g2.setFont(u8g2_font_logisoso32_tn);
-				sprintf(textBuff, "%d%s%d", timeClient.getHours(), ":", timeClient.getMinutes());
+				sprintf(textBuff, "%02d%s%02d", timeClient.getHours(), ":", timeClient.getMinutes());
 				u8g2.drawStr(0, 64, textBuff);
 				break;
 			default:
